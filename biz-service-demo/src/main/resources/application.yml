@@ -1,0 +1,6 @@
+server:
+  port: 8118
+
+spring:
+  application:
+    name: biz-service-demo

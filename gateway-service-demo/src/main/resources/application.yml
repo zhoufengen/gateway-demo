@@ -1,0 +1,15 @@
+server:
+  port: 8229
+
+spring:
+  application:
+    name: gateway-service-demo
+  cloud:
+    gateway:
+      routes:
+        - id: test_route
+          uri: http://localhost:8118  # ??????
+          predicates:
+            - Path=/api/**
+#          filters:
+#            - RewritePath=/api/(?<segment>.*), /$\{segment}

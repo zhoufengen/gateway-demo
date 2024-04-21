@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+<!-- 日志添加到控制台 -->
+<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+        <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+</appender>
+
+<!-- [Netty Appender] Access日志 -->
+<appender name="ACCESS-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+<file>./logs/access_log.log</file>
+<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+    <fileNamePattern>./logs/access_log.log.%d{yyyyMMdd}</fileNamePattern>
+    <maxHistory>20</maxHistory>
+</rollingPolicy>
+<encoder charset="UTF-8">
+    <pattern>%msg%n</pattern>
+</encoder>
+</appender>
+
+<appender name="ASYNC-APPENDER" class="ch.qos.logback.classic.AsyncAppender">
+<appender-ref ref="ACCESS-APPENDER" />
+</appender>
+        <!-- ===== [Access Logger] ===== -->
+<logger name="reactor.netty.http.server.AccessLog" additivity="false">
+<level value="INFO"/>
+<appender-ref ref="ASYNC-APPENDER"/>
+</logger>
+
+<root level="INFO">
+    <appender-ref ref="console" />
+<!--    <appender-ref ref="ACCESS-APPENDER" />-->
+</root>
+
+</configuration>
